@@ -1,0 +1,120 @@
+"use client";
+
+import React from "react";
+import { Menu, X } from "lucide-react";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+  SheetClose,
+} from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+
+const navigation = [
+  { name: "Home", href: "/" },
+  { name: "About Us", href: "/about-us" },
+  { name: "Download Paper", href: "/paper" },
+  { name: "News", href: "/news" },
+  { name: "Contact", href: "/contact" },
+];
+
+const logo_src =
+  "https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600";
+
+export default function Nav() {
+  return (
+    <header className="fixed inset-x-0 top-0 mb-4 w-full z-50">
+      <nav
+        aria-label="Global"
+        className="flex items-center justify-between p-6 lg:px-8 bg-background"
+      >
+        {/* Logo Section */}
+        <div className="flex lg:flex-1">
+          <Link href="/" className="-m-1.5 p-1.5">
+            <span className="sr-only">Your Company</span>
+            <img alt="" src={logo_src} className="h-8 w-auto" />
+          </Link>
+        </div>
+
+        {/* Mobile Menu Trigger */}
+        <div className="flex lg:hidden">
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" className="-m-2.5">
+                <Menu className="h-6 w-6" aria-hidden="true" />
+                <span className="sr-only">Open main menu</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-full sm:max-w-sm p-6">
+              <SheetHeader className="flex items-center justify-between">
+                <SheetTitle asChild>
+                  <Link href="/" className="-m-1.5 p-1.5">
+                    <span className="sr-only">Your Company</span>
+                    <img alt="" src={logo_src} className="h-8 w-auto" />
+                  </Link>
+                </SheetTitle>
+                <SheetClose asChild>
+                  <Button variant="ghost" size="icon" className="-m-2.5">
+                    <X className="h-6 w-6" aria-hidden="true" />
+                    <span className="sr-only">Close menu</span>
+                  </Button>
+                </SheetClose>
+              </SheetHeader>
+
+              <div className="mt-6 flow-root">
+                <div className="-my-6 divide-y divide-muted">
+                  <div className="space-y-2 py-6">
+                    {navigation.map((item) => (
+                      <Link
+                        key={item.name}
+                        href={item.href}
+                        className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold hover:bg-accent"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        {item.name}
+                      </Link>
+                    ))}
+                  </div>
+                  <div className="py-6">
+                    <Link
+                      href="/login"
+                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold hover:bg-accent"
+                    >
+                      Employee Log in
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
+        </div>
+
+        {/* Desktop Navigation */}
+        <div className="hidden lg:flex lg:gap-x-12">
+          {navigation.map((item) => (
+            <Link
+              key={item.name}
+              href={item.href}
+              className="text-sm font-semibold leading-6 hover:text-primary"
+            >
+              {item.name}
+            </Link>
+          ))}
+        </div>
+
+        {/* Desktop Login Button */}
+        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+          <Link
+            href="/login"
+            className="text-sm font-semibold leading-6 hover:text-primary"
+          >
+            Employee Log in <span aria-hidden="true">&rarr;</span>
+          </Link>
+        </div>
+      </nav>
+    </header>
+  );
+}
